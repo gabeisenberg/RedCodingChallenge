@@ -1,0 +1,3 @@
+CREATE TABLE ORDERTYPE (
+    type VARCHAR(20)
+)
