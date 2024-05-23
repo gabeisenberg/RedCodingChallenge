@@ -1,2 +1,16 @@
 /CodingChallengeAPI/bin/Debug/net8.0/appsettings.Development.json
 /CodingChallengeAPI/CodingChallengeAPI/appsettings.Development.json
+/my-app/node_modules
+/.vs
+/CodingChallengeAPI/CodingChallengeAPI/bin/Debug/net8.0
+/CodingChallengeAPI/CodingChallengeAPI/obj
+/CodingChallengeAPI/Database/bin/Debug/net8.0
+/CodingChallengeAPI/Database/obj
+/CodingChallengeAPI/Globals/bin/Debug/net8.0
+/CodingChallengeAPI/Globals/obj
+/CodingChallengeAPI/Models/bin/Debug/net8.0
+/CodingChallengeAPI/Models/obj
+/CodingChallengeAPI/Services/bin/Debug/net8.0
+/CodingChallengeAPI/Services/obj
+/my-app/.vs
+/CodingChallengeAPI/.vs/CodingChallengeAPI/FileContentIndex
