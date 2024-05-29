@@ -1,6 +1,32 @@
 .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  position: fixed;
+  top: 6.5%;
+  left: 0;
+  width: 98.5vw;
+  height: 90vh;
+}
+
+#nav {
+  width: 10vw;
+  height: 100vh;
+}
+
+#searchTool {
+  width: 1000px;
+}
+
+#addTool {
+  width: 250px;
+}
+
+#deleteTool {
+  width: 250px;
+}
+
+#modifyTool {
+  width: 250px;
+}
+
+#settingsButton {
+  width: 50px;
+}
