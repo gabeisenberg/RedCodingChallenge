@@ -1,92 +1,137 @@
 import Table from "./Table"
 import AppHeader from "./AppHeader"
-import { List, ListItem, Box, Drawer, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from "@mui/material";
+import Login from "./Login"
+import Signup from "./Signup"
+import { List, ListItem, Box, Drawer, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField,
+  Container, FormControlLabel, Typography, Grid, Link, Checkbox, Stack, Divider
+ } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./AppHeader.css"
 
 function App() {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [username, setUsername] = useState("");
+  const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const handleClickLogIn = () => {
-    setOpenLogin(!openLogin);
-  }
-
-  const handleSubmit = () => {
-    console.log(username);
-    handleClickLogIn();
-  }
-
-  function LoginClick() {
-    return (<React.Fragment>
-          <Button variant="outlined" onClick={handleClickLogIn}>
-            Log In
-          </Button>
-          <Dialog
-            open={openLogin}
-            onClose={handleClickLogIn}
-            PaperProps={{
-              component: 'form',
-              onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                event.preventDefault();
-                const formData = new FormData(event.currentTarget);
-                const formJson = Object.fromEntries((formData as any).entries());
-                const name = formJson.username;
-                setUsername(name);
-                handleSubmit();
-              },
-            }}
-          >
-            <DialogTitle>Enter Account Information</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Enter your username:
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  required
-                  margin="dense"
-                  id="name"
-                  name="username"
-                  label="username"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClickLogIn}>Cancel</Button>
-                <Button type="submit" onSubmit={handleClickLogIn}>Submit</Button>
-              </DialogActions>
-          </Dialog>
-      </React.Fragment>);
-  }
-
-  const LoginDrawer = (
+  const SettingsDrawer = () => (
     <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
       <List>
         <ListItem>
-          <LoginClick/>
-        </ListItem>
-        <ListItem>
           <Button variant="outlined" onClick={() => {
             setOpenDrawer(false);
-            console.log("cancel!");
           }}>Cancel</Button>
         </ListItem>
       </List>
     </Box>
   );
 
+  const LoginDrawer = () =>  {
+    if (user != null && loggedIn) {
+      console.log(user, 'drawer success?');
+      return (
+      <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+        <List>
+          <ListItem>
+            <Box sx={{ border: '2px solid grey' }}>
+              <Divider orientation="horizontal" component="li" flexItem={true} sx={{display: "flex", justifyContent: "left"}}>
+                <Typography style={{color: 'black'}}>
+                  Account Info
+                </Typography>
+              </Divider>
+            </Box>
+          </ListItem>
+          <ListItem>
+            <Typography style={{color: 'black'}}>
+              Username: {user.userName}
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Typography style={{color: 'black'}}>
+              Name: {user.firstName + ' ' + user.lastName}
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Button variant="outlined" onClick={() => {
+              setLoggedIn(false);
+            }}>
+              Sign Out
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button variant="outlined" onClick={() => {
+              setOpenLoginDrawer(false);
+              console.log("cancel!");
+            }}>Cancel</Button>
+          </ListItem>
+        </List>
+      </Box>)
+    }
+    else {
+      return (
+        <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+          <List>
+          <ListItem>
+            <Button variant="outlined">
+              Log In
+            </Button>
+          </ListItem>
+            <ListItem>
+              <Button variant="outlined" onClick={() => {
+                setOpenLoginDrawer(false);
+                console.log("cancel!");
+              }}>Cancel</Button>
+            </ListItem>
+          </List>
+        </Box>)
+    }
+  }
+
+  const Main = () => {
+    if (loggedIn) {
+      return ( <>
+        <Drawer open={openDrawer} anchor='right' PaperProps={{sx:{width: 200}}}>
+          <SettingsDrawer/>
+        </Drawer>
+        <Drawer open={openLoginDrawer} anchor='right' PaperProps={{sx:{width: 200}}}>
+          <LoginDrawer/>
+        </Drawer>
+        <AppHeader handleClick={setOpenDrawer} handleLoginClick={setOpenLoginDrawer}/>
+        <Table/>
+      </>);
+    }
+    else {
+      return (
+        <>
+          <Box sx={{
+            borderRadius: 0,
+            width: 600,
+            height: 1000,
+            bgcolor: 'primary.main',
+            backgroundColor: '#D84040'
+        }}></Box>
+          <Box id="homePage" sx={{ borderColor: 'primary.main'}}>
+            <Stack direction="row" spacing={2} sx={{alignItems: 'center', display: 'flex', justifyContent: 'center'}}>
+              <Container component="main" maxWidth="xs">
+                <Login setter={setUser} logger={setLoggedIn}/>
+              </Container>
+              <Divider orientation="vertical" component="li" flexItem={true}>
+                <Typography style={{color: 'black'}}>
+                  OR
+                </Typography>
+              </Divider>
+              <Container component="main" maxWidth="xs">
+                <Signup setter={setUser} logger={setLoggedIn}/>
+              </Container>
+            </Stack>
+          </Box>
+        </>
+      );
+    }
+  }
+
   return (
-    <>
-      <Drawer open={openDrawer} anchor='right' PaperProps={{sx:{width: 200}}}>
-        {LoginDrawer}
-      </Drawer>
-      <AppHeader handleClick={setOpenDrawer}/>
-      <Table/>
-    </>
+     <Main/>
   )
 }
 

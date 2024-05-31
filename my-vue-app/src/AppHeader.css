@@ -7,11 +7,25 @@
 
 #button {
     align-items: 'flex-end';
-    left: 1775px;
+    left: 2365px;
     transform: scale(1.75);
 }
 
 .drawer {
     width: 500px;
     flex-shrink: 0;
+}
+
+#homePage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -50%);
+}
+
+#title {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

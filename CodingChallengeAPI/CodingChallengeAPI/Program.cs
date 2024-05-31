@@ -14,6 +14,7 @@ builder.Services.AddDbContext<RedDBContext>(options =>
     options.UseSqlServer(connectionString,
     b => b.MigrationsAssembly(typeof(RedDBContext).Assembly.FullName)));
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -45,3 +46,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+//Server=(localdb)\MSSQLLocalDB;Integrated Security=true

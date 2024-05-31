@@ -15,7 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const Table = ({userName}) => {
+const Table = () => {
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
   const [openAdd, setOpenAdd] = React.useState(false);
@@ -190,7 +190,7 @@ function QuickSearchToolbar() {
     <Box
       sx={{
         p: 0.5,
-        pb: 0,
+        pb: 0
       }}
     >
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
@@ -364,7 +364,7 @@ function QuickSearchToolbar() {
 
   return (
     <div className="center">
-        <Box className="center" component="section" sx={{ p: 2, border: '1px solid grey' }}>
+        <Box className="center" component="section" sx={{ p: 2 }}>
             <DataGrid
               rows={ convertedData || [] }
               rowHeight={68}
