@@ -5,7 +5,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { List, ListItem, Box, Drawer } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import "./AppHeader.css"
+import "./styles/AppHeader.css"
 
 export default function AppHeader({handleClick, handleLoginClick}) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -21,7 +21,7 @@ export default function AppHeader({handleClick, handleLoginClick}) {
 
   return (
     <Box className="top" sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="error">
         <Toolbar id="button" >
           <IconButton size="large" edge="end" onClick={() => {
             handleClick(true);

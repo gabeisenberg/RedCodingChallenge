@@ -29,8 +29,8 @@ namespace Services.Logic
             {
                 Id = order.Id,
                 OrderType = order.OrderType,
+                OrderedBy = order.OrderedBy,
                 CustomerName = order.CustomerName,
-                CreateUserId = order.CreateUserId,
                 CreatedDate = order.CreatedDate
             }).ToList();
         }
@@ -40,6 +40,7 @@ namespace Services.Logic
             var newOrder = new Order
             {
                 OrderType = request.OrderType,
+                OrderedBy = request.OrderedBy,
                 CustomerName = request.CustomerName
             };
             _context.Add(newOrder);
@@ -67,13 +68,14 @@ namespace Services.Logic
             }
             temp.OrderType = request.OrderType;
             temp.CustomerName = request.CustomerName;
+            temp.OrderedBy = request.OrderedBy;
             _context.SaveChanges();
             return new OrderDetails
             {
                 Id = temp.Id,
                 OrderType = temp.OrderType,
+                OrderedBy = temp.OrderedBy,
                 CustomerName = temp.CustomerName,
-                CreateUserId = temp.CreateUserId,
                 CreatedDate = temp.CreatedDate
             };
         }

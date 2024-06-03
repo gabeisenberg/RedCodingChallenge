@@ -7,10 +7,8 @@ namespace Database.Entities
     {
         public Guid Id { get; set; }
         public OrderType OrderType { get; set; }
-        public string CustomerName { get; set; }
-        public Guid? CreateUserId { get; set; }
+        public string? OrderedBy { get; set; }
+        public string? CustomerName { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        [ForeignKey("CreateUserId")]
-        public virtual User CreateUser { get; set; }
     }
 }

@@ -13,6 +13,7 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<RedDBContext>(options =>
     options.UseSqlServer(connectionString,
     b => b.MigrationsAssembly(typeof(RedDBContext).Assembly.FullName)));
+
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.

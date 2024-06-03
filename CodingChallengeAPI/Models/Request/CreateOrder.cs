@@ -10,6 +10,7 @@ namespace Models.Request
     public class CreateOrder
     {
         public OrderType OrderType { get; set; }
+        public string OrderedBy { get; set; }
         public string CustomerName { get; set; }
     }
 }

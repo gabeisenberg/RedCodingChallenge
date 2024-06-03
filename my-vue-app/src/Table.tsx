@@ -1,12 +1,11 @@
-import "./Table.css";
-import React, { SetStateAction, useEffect, useState } from "react";
-import { DataGrid, GridToolbar, GridColDef, GridToolbarQuickFilter, GridLogicOperator, } from "@mui/x-data-grid";
+import "./styles/Table.css";
+import React, { useEffect, useState } from "react";
+import { DataGrid, GridToolbarQuickFilter,  } from "@mui/x-data-grid";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -14,14 +13,22 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Divider, Select } from "@mui/material";
 
-const Table = () => {
+interface IProps {
+  firstName: string,
+  lastName: string
+}
+
+const Table = (props : IProps) => {
+  const {firstName, lastName} = props;
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
   const [openAdd, setOpenAdd] = React.useState(false);
   const [openModify, setOpenModify] = React.useState(false);
   const [selections, setSelections] = useState([]);
   const [filter, setFilter] = useState(null);
+  const [fetcher, setFetcher] = useState(0);
 
 useEffect(() => {
   const doFetch = async () => {
@@ -45,7 +52,7 @@ useEffect(() => {
     window.location.reload();
   };
   doFetch();
-}, [search, filter]);
+}, [search, filter, fetcher]);
 
   const handleClickOpenAdd = () => {
     setOpenAdd(true);
@@ -110,7 +117,7 @@ useEffect(() => {
   const handleAddSubmit = async (name, type) => {
     try {
     //make post http call with name and type
-    console.log(name);
+    console.log(name, 'name test');
     console.log(type);
     //make call
     const orderType = parseInt(type);
@@ -121,14 +128,16 @@ useEffect(() => {
         },
         body: JSON.stringify({
           "orderType": orderType,
-          "customerName": name
+          "orderedBy": name,
+          "customerName": `${firstName + ' ' + lastName}`
         }),
       });
       if (!response.ok) {
         throw new Error('Oops');
       }
       else {
-        window.location.reload();
+        //window.location.reload();
+        setFetcher(fetcher + 1);
       }
       console.log(response);
     }
@@ -153,7 +162,8 @@ useEffect(() => {
         console.log('errrorrr');
       }
     });
-    window.location.reload();
+    //window.location.reload();
+    setFetcher(fetcher + 1);
     }
   };
 
@@ -167,11 +177,13 @@ useEffect(() => {
         },
         body: JSON.stringify({
           "orderType": orderType,
-          "customerName": name
+          "orderedBy": name,
+          "customerName": `${firstName + ' ' + lastName}`
         }),
       }).then(response => {
         if (response.ok) {
-          window.location.reload();
+          //window.location.reload();
+          setFetcher(fetcher + 1);
         }
         else {
           console.log(response.status);
@@ -194,16 +206,37 @@ function QuickSearchToolbar() {
       }}
     >
       <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
-        <GridToolbarQuickFilter id="searchTool"
-          quickFilterParser={(searchInput: string) =>
-            searchInput
-              .split(',')
-              .map((value) => value.trim())
-              .filter((value) => value !== '')
-          }
-        />
+        <Box sx={{
+          width: 575,
+          height: 56.25,
+          borderRadius: 1,
+          border: '1px solid #E28B95'
+        }}>
+          <Divider orientation="horizontal" component="li" flexItem={true} sx={{display: "flex", justifyContent: "left"}}>
+            <GridToolbarQuickFilter id="searchTool"
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: 58.25,
+                  placeholder: "SEARCH..."
+                },
+                "& .MuiInput-underline:before": {
+                  content: 'none'
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::after": {
+                  content: 'none'
+                }
+              }}
+              quickFilterParser={(searchInput: string) =>
+                searchInput
+                  .split(',')
+                  .map((value) => value.trim())
+                  .filter((value) => value !== '')
+              }
+            />
+          </Divider>
+        </Box>
         <React.Fragment>
-          <Button id="addTool" variant="outlined" onClick={handleClickOpenAdd}>
+          <Button id="addTool" variant="outlined" onClick={handleClickOpenAdd} color="error">
             Add Order
           </Button>
           <Dialog
@@ -220,6 +253,14 @@ function QuickSearchToolbar() {
                 handleAddSubmit(name, type);
                 handleCloseAdd();
               },
+            }}
+            sx={{
+              "& .css-953pxc-MuiInputBase-root-MuiInput-root::before": {
+
+              },
+              "& .css-953pxc-MuiInputBase-root-MuiInput-root::after": {
+
+              }
             }}
           >
             <DialogTitle>Enter Order Details</DialogTitle>
@@ -251,16 +292,16 @@ function QuickSearchToolbar() {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleCloseAdd}>Cancel</Button>
-                <Button type="submit" onSubmit={handleAddSubmit}>Submit</Button>
+                <Button onClick={handleCloseAdd} color="error">Cancel</Button>
+                <Button type="submit" onSubmit={handleAddSubmit} color="error">Submit</Button>
               </DialogActions>
           </Dialog>
           </React.Fragment>
-            <Button id="deleteTool" variant="outlined" onClick={handleDeleteRow}>
+            <Button id="deleteTool" variant="outlined" onClick={handleDeleteRow} color="error">
               Delete Order
             </Button>
           <React.Fragment>
-            <Button id="modifyTool" variant="outlined" onClick={handleClickOpenModify}>
+            <Button id="modifyTool" variant="outlined" onClick={handleClickOpenModify} color="error">
               Modify Order
             </Button>
             <Dialog
@@ -320,12 +361,12 @@ function QuickSearchToolbar() {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleCloseModify}>Cancel</Button>
-                  <Button type="submit" onSubmit={handleAddSubmit}>Submit</Button>
+                  <Button onClick={handleCloseModify} color="error">Cancel</Button>
+                  <Button type="submit" onSubmit={handleAddSubmit} color="error">Submit</Button>
                 </DialogActions>
           </Dialog>
           </React.Fragment>
-          <FormControl fullWidth>
+          <FormControl fullWidth color="error">
             <InputLabel id="demo-simple-select-label">Order Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -350,8 +391,8 @@ function QuickSearchToolbar() {
   const cols = [
     { field: "id", headerName: "Order Id", width: 400 },
     { field: "orderType", headerName: "Order Type", width: 300 },
+    { field: "orderedBy", headerName: "Customer Name", width: 300 },
     { field: "customerName", headerName: "Ordered By", width: 300 },
-    { field: "createUserId", headerName: "User Id", width: 300 },
     { field: "createdDate", headerName: "Date Created", width: 250 },
   ];
 
