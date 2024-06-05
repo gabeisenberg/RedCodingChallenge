@@ -111,13 +111,13 @@ function App() {
     <Box sx={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
       <List>
         <ListItem>
-          <FormGroup>
+          {/* <FormGroup>
             <FormControlLabel
-              control={<DarkSwitch sx={{ m: 1 }} defaultChecked />}
-              
-              label=""
+               control={
+                <Switch onChange={setIsDark(!isDark)} />
+              }
             />
-          </FormGroup>
+          </FormGroup> */}
           <Button variant="outlined" color="error" sx={{left: 0, width: 175, top: 800}} onClick={() => {
             setOpenDrawer(false);
           }}>Cancel</Button>
