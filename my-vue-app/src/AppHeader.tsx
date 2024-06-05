@@ -12,7 +12,7 @@ export default function AppHeader({handleClick, handleLoginClick}) {
 
   const LoginInfo = () => {
     return (
-      <IconButton size="large" edge="end" onClick={() => {
+      <IconButton size="large" sx={{top: 0, right: 0}} onClick={() => {
         handleLoginClick(true);
       }}>
         <AccountCircleIcon/>
@@ -20,10 +20,13 @@ export default function AppHeader({handleClick, handleLoginClick}) {
   );}
 
   return (
-    <Box className="top" sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="error">
-        <Toolbar id="button" >
-          <IconButton size="large" edge="end" onClick={() => {
+
+      <AppBar position="fixed" color="error" sx={{
+        top: 0,
+        left: 0
+      }}>
+        <Toolbar>
+          <IconButton size="large" sx={{top: 0, right: 0, zIndex: 1000}} onClick={() => {
             handleClick(true);
             console.log("clicked wheel!");
           }}>
@@ -32,6 +35,6 @@ export default function AppHeader({handleClick, handleLoginClick}) {
           <LoginInfo/>
         </Toolbar>
       </AppBar>
-    </Box>
+
   );
 }

@@ -42,6 +42,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+    options.SetPreflightMaxAge(TimeSpan.FromMinutes(10));
+}); //needed in this order
+app.UseAuthentication(); //implement?
+
 app.UseAuthorization();
 
 app.MapControllers();

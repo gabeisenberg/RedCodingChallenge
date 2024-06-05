@@ -5,13 +5,13 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallengeAPI", "CodingChallengeAPI\CodingChallengeAPI\CodingChallengeAPI.csproj", "{E31D1872-1DD5-47A9-8E3F-DE2B8C28E0EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "CodingChallengeAPI\Models\Models.csproj", "{188658F0-5CA7-4D78-BAB1-7857AC7F500D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "CodingChallengeAPI\Models\Models.csproj", "{188658F0-5CA7-4D78-BAB1-7857AC7F500D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "CodingChallengeAPI\Database\Database.csproj", "{001D6DB7-8374-4441-99F1-B20086D5D653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "CodingChallengeAPI\Database\Database.csproj", "{001D6DB7-8374-4441-99F1-B20086D5D653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "CodingChallengeAPI\Globals\Globals.csproj", "{09F3A652-722E-425D-AB1F-AEDA80F2A9BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Globals", "CodingChallengeAPI\Globals\Globals.csproj", "{09F3A652-722E-425D-AB1F-AEDA80F2A9BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "CodingChallengeAPI\Services\Services.csproj", "{58F81FB5-2162-40D8-9A7D-1780409AE55D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "CodingChallengeAPI\Services\Services.csproj", "{58F81FB5-2162-40D8-9A7D-1780409AE55D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

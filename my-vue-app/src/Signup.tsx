@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import {Box, TextField, Button} from "@mui/material";
+import {Box, TextField, Button, IconButton, Collapse, Alert} from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 interface IProps {
   setter: Dispatch<SetStateAction<any>>;
@@ -14,6 +15,7 @@ function Signup (props : IProps) {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [open, setOpen] = useState(false);
     
     async function handleSignUpSubmit() {
         if (password == confirmedPassword) {
@@ -31,6 +33,7 @@ function Signup (props : IProps) {
           })
           .then(async response => {
             if (!response.ok) {
+                setOpen(true);
                 throw new Error('bad network');
             }
             console.log(response, 'response is here');
@@ -44,25 +47,32 @@ function Signup (props : IProps) {
             logger(true);
             return response;
           });
-          // .then((json) => {
-          //     const newUser = {
-          //       userName: json.userName,
-          //       firstName: json.firstName,
-          //       lastName: json.lastName,
-          //       passWord: json.passWord
-          //     };
-          //     console.log('we made it?');
-          //     setter(newUser);
-          //     logger(true);
-          //     return;
-          // })
-          // .catch(error => {
-          //     console.log(error);
-          // });
+          setOpen(true);
         }
+        setOpen(true);
     }
 
     return (
+      <>
+        <Collapse in={open}>
+            <Alert variant="outlined" severity="error" 
+                action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                    >
+                        <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                }
+                sx={{ mb: 2 }}
+                >
+                Error signing up!
+            </Alert>
+        </Collapse>
         <Box
             sx={{  
             marginTop: 8,
@@ -152,6 +162,7 @@ function Signup (props : IProps) {
             </Button>
             </Box>
         </Box>
+      </>
     )
 }
 

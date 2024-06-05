@@ -1,0 +1,6 @@
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.csproj.AssemblyReference.cache
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.AssemblyInfoInputs.cache
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.AssemblyInfo.cs
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.csproj.CoreCompileInputs.cache
+C:\Users\gisenberg\CodingChallenge\CodingChallengeAPI\obj\Debug\net8.0\CodingChallengeAPI.sourcelink.json

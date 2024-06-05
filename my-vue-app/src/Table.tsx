@@ -13,7 +13,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Divider, Select } from "@mui/material";
+import { Alert, Collapse, Divider, IconButton, Select } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 interface IProps {
   firstName: string,
@@ -29,6 +30,7 @@ const Table = (props : IProps) => {
   const [selections, setSelections] = useState([]);
   const [filter, setFilter] = useState(null);
   const [fetcher, setFetcher] = useState(0);
+  const [open, setOpen] = useState(false);
 
 useEffect(() => {
   const doFetch = async () => {
@@ -149,6 +151,7 @@ useEffect(() => {
   const handleDeleteRow = () => {
     if (selections.length == 0) {
       console.log('EMPTY CANNOT DELETE');
+      setOpen(true);
     }
     else {
       selections.map(id => {
@@ -199,144 +202,95 @@ useEffect(() => {
 
 function QuickSearchToolbar() {
   return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0
-      }}
-    >
-      <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
-        <Box sx={{
-          width: 575,
-          height: 56.25,
-          borderRadius: 1,
-          border: '1px solid #E28B95'
-        }}>
-          <Divider orientation="horizontal" component="li" flexItem={true} sx={{display: "flex", justifyContent: "left"}}>
-            <GridToolbarQuickFilter id="searchTool"
-              sx={{
-                "& .MuiInputBase-root": {
-                  height: 58.25,
-                  placeholder: "SEARCH..."
-                },
-                "& .MuiInput-underline:before": {
-                  content: 'none'
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::after": {
-                  content: 'none'
-                }
-              }}
-              quickFilterParser={(searchInput: string) =>
-                searchInput
-                  .split(',')
-                  .map((value) => value.trim())
-                  .filter((value) => value !== '')
+    <>
+      <Collapse in={open}>
+          <Alert variant="outlined" severity="error" 
+              action={
+                  <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                          setOpen(false);
+                      }}
+                  >
+                      <CloseIcon fontSize="inherit" />
+                  </IconButton>
               }
-            />
-          </Divider>
-        </Box>
-        <React.Fragment>
-          <Button id="addTool" variant="outlined" onClick={handleClickOpenAdd} color="error">
-            Add Order
-          </Button>
-          <Dialog
-            open={openAdd}
-            onClose={handleCloseAdd}
-            PaperProps={{
-              component: 'form',
-              onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                event.preventDefault();
-                const formData = new FormData(event.currentTarget);
-                const formJson = Object.fromEntries((formData as any).entries());
-                const name = formJson.orderName;
-                const type = typeToNum(formJson.orderType);
-                handleAddSubmit(name, type);
-                handleCloseAdd();
-              },
-            }}
-            sx={{
-              "& .css-953pxc-MuiInputBase-root-MuiInput-root::before": {
-
-              },
-              "& .css-953pxc-MuiInputBase-root-MuiInput-root::after": {
-
-              }
-            }}
+              sx={{ mb: 2 }}
           >
-            <DialogTitle>Enter Order Details</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Please enter a type and name for the order.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  required
-                  margin="dense"
-                  id="name"
-                  name="orderType"
-                  label="Order Type"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-                <TextField
-                  autoFocus
-                  required
-                  margin="dense"
-                  id="name"
-                  name="orderName"
-                  label="Order Name"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseAdd} color="error">Cancel</Button>
-                <Button type="submit" onSubmit={handleAddSubmit} color="error">Submit</Button>
-              </DialogActions>
-          </Dialog>
-          </React.Fragment>
-            <Button id="deleteTool" variant="outlined" onClick={handleDeleteRow} color="error">
-              Delete Order
-            </Button>
+              Select orders to delete!
+          </Alert>
+      </Collapse>
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0
+        }}
+      >
+        <Stack direction="row" spacing={2} sx={{ mb: 1 }}>
+          <Box sx={{
+            width: 575,
+            height: 56.25,
+            borderRadius: 1,
+            border: '1px solid #E28B95'
+          }}>
+            <Divider orientation="horizontal" component="li" flexItem={true} sx={{display: "flex", justifyContent: "left"}}>
+              <GridToolbarQuickFilter id="searchTool"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: 58.25,
+                    placeholder: "SEARCH..."
+                  },
+                  "& .MuiInput-underline:before": {
+                    content: 'none'
+                  },
+                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::after": {
+                    content: 'none'
+                  }
+                }}
+                quickFilterParser={(searchInput: string) =>
+                  searchInput
+                    .split(',')
+                    .map((value) => value.trim())
+                    .filter((value) => value !== '')
+                }
+              />
+            </Divider>
+          </Box>
           <React.Fragment>
-            <Button id="modifyTool" variant="outlined" onClick={handleClickOpenModify} color="error">
-              Modify Order
+            <Button id="addTool" variant="outlined" onClick={handleClickOpenAdd} color="error">
+              Add Order
             </Button>
             <Dialog
-              open={openModify}
-              onClose={handleCloseModify}
+              open={openAdd}
+              onClose={handleCloseAdd}
               PaperProps={{
                 component: 'form',
                 onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                   event.preventDefault();
                   const formData = new FormData(event.currentTarget);
                   const formJson = Object.fromEntries((formData as any).entries());
-                  const id = formJson.orderId;
                   const name = formJson.orderName;
                   const type = typeToNum(formJson.orderType);
-                  handleModifyRow(id, name, type);
-                  handleCloseModify();
+                  handleAddSubmit(name, type);
+                  handleCloseAdd();
                 },
+              }}
+              sx={{
+                "& .css-953pxc-MuiInputBase-root-MuiInput-root::before": {
+
+                },
+                "& .css-953pxc-MuiInputBase-root-MuiInput-root::after": {
+
+                }
               }}
             >
               <DialogTitle>Enter Order Details</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Please enter an ID, followed by the modified type and name for the order.
+                    Please enter a type and name for the order.
                   </DialogContentText>
-                  <TextField
-                    autoFocus
-                    required
-                    margin="dense"
-                    id="name"
-                    name="orderId"
-                    label="Order ID"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />
                   <TextField
                     autoFocus
                     required
@@ -361,30 +315,100 @@ function QuickSearchToolbar() {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleCloseModify} color="error">Cancel</Button>
+                  <Button onClick={handleCloseAdd} color="error">Cancel</Button>
                   <Button type="submit" onSubmit={handleAddSubmit} color="error">Submit</Button>
                 </DialogActions>
-          </Dialog>
-          </React.Fragment>
-          <FormControl fullWidth color="error">
-            <InputLabel id="demo-simple-select-label">Order Type</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={filter}
-              label="Order Type"
-              onChange={handleFilterRow}
-            >
-              <MenuItem value={0}>Standard</MenuItem>
-              <MenuItem value={1}>Sale</MenuItem>
-              <MenuItem value={2}>Purchase</MenuItem>
-              <MenuItem value={3}>Transfer</MenuItem>
-              <MenuItem value={4}>Return</MenuItem>
-              <MenuItem value={5}>All</MenuItem>
-            </Select>
-          </FormControl>
-      </Stack>
-    </Box>
+            </Dialog>
+            </React.Fragment>
+              <Button id="deleteTool" variant="outlined" onClick={handleDeleteRow} color="error">
+                Delete Order
+              </Button>
+            <React.Fragment>
+              <Button id="modifyTool" variant="outlined" onClick={handleClickOpenModify} color="error">
+                Modify Order
+              </Button>
+              <Dialog
+                open={openModify}
+                onClose={handleCloseModify}
+                PaperProps={{
+                  component: 'form',
+                  onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.currentTarget);
+                    const formJson = Object.fromEntries((formData as any).entries());
+                    const id = formJson.orderId;
+                    const name = formJson.orderName;
+                    const type = typeToNum(formJson.orderType);
+                    handleModifyRow(id, name, type);
+                    handleCloseModify();
+                  },
+                }}
+              >
+                <DialogTitle>Enter Order Details</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Please enter an ID, followed by the modified type and name for the order.
+                    </DialogContentText>
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="name"
+                      name="orderId"
+                      label="Order ID"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="name"
+                      name="orderType"
+                      label="Order Type"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="name"
+                      name="orderName"
+                      label="Order Name"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseModify} color="error">Cancel</Button>
+                    <Button type="submit" onSubmit={handleAddSubmit} color="error">Submit</Button>
+                  </DialogActions>
+            </Dialog>
+            </React.Fragment>
+            <FormControl fullWidth color="error">
+              <InputLabel id="demo-simple-select-label">Order Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filter}
+                label="Order Type"
+                onChange={handleFilterRow}
+              >
+                <MenuItem value={0}>Standard</MenuItem>
+                <MenuItem value={1}>Sale</MenuItem>
+                <MenuItem value={2}>Purchase</MenuItem>
+                <MenuItem value={3}>Transfer</MenuItem>
+                <MenuItem value={4}>Return</MenuItem>
+                <MenuItem value={5}>All</MenuItem>
+              </Select>
+            </FormControl>
+        </Stack>
+      </Box>
+    </>
   );
 }
 

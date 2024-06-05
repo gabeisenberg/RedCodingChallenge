@@ -1,15 +1,10 @@
 .top {
-    top: 0%;
+    top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
 }
 
-#button {
-    align-items: 'flex-end';
-    left: 2365px;
-    transform: scale(1.75);
-}
 
 .drawer {
     width: 500px;

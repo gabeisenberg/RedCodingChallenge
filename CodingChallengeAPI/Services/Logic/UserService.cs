@@ -1,5 +1,6 @@
 ﻿using Database;
 using Database.Entities;
+using Microsoft.Extensions.Configuration;
 using Models.Request;
 using Models.Response;
 using Services.Interfaces;
@@ -22,6 +23,11 @@ namespace Services.Logic
 
         public void CreateUser(CreateUser request)
         {
+            var checkUser = _context.User.FirstOrDefault(x => x.UserName == request.UserName);
+            if (checkUser != null)
+            {
+                throw new Exception("Username already exists");
+            }
             var newUser = new User
             {
                 UserName = request.UserName,
